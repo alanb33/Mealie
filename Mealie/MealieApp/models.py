@@ -19,6 +19,20 @@ class FoodItem(models.Model):
     iron_dv = models.IntegerField()
     potassium_dv = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Food Item Entry"
+        verbose_name_plural = "Food Item Entries"
+
 class JournalEntry(models.Model):
     date = models.DateField(auto_now_add=True)
     food_item = models.ForeignKey("FoodItem", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return "Journal Entry " + str(self.date.today()) + ": " + self.food_item.name
+
+    class Meta:
+        verbose_name = "Journal Entry"
+        verbose_name_plural = "Journal Entries"
