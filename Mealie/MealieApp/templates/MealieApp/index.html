@@ -2,4 +2,11 @@
 {% block body %}
     <h1>{{ title }}</h1>
     <p>Hello, world!</p>
+    <p>Choose what to do:</p>
+    <ul>
+        <li><a href="{% url 'Mealie:index' %}">View today's journal entry</a></li>
+        <li><a href="{% url 'Mealie:index' %}">View another day's journal entry</a></li>
+        <li><a href="{% url 'Mealie:index' %}">View the food database</a></li>
+        <li><a href="{% url 'Mealie:debugger' %}">Head to the debugger</a></li>
+    </ul>
 {% endblock %}

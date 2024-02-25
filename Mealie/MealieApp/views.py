@@ -7,3 +7,9 @@ def index(request):
     {
         "title": "Mealie!",
     })
+
+def debugger(request):
+    return render(request, "Mealieapp/debugger.html",
+    {
+        "title": "Debugger Page",
+    })
