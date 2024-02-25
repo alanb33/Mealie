@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        {% if script_src %}
+            <script src="{% static script_src %}"></script>
+        {% endif %}
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+    {% if request.path != "/mealie/" %}
+        <footer>
+            <a href="{% url 'Mealie:index' %}">Return to the Mealie Index</a>
+        </footer>
+    {% endif %}
+</html>
