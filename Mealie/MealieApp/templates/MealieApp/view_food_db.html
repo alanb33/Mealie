@@ -1,0 +1,13 @@
+{% extends "MealieApp/layout.html" %}
+{% block body %}
+    {% if food_db %}
+        <ul>
+            {% for food in food_db %}
+                <li>{{ food.name }}</li>
+            {% endfor %}
+        </ul>
+        <p><a href="">Add a new food item</a></p>
+    {% else %}
+        <p>There are no food items in the database! <a href="">Click here to add some.</a></p>
+    {% endif %}
+{% endblock %}
