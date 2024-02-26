@@ -21,9 +21,11 @@ def view_food_db(request):
 def debugger(request):
 
     debug_msg = str(len(FoodItem.objects.all()))
+    food_db = FoodItem.objects.all()
 
     return render(request, "Mealieapp/debugger.html",
     {
         "title": "Debugger Page",
-        "debug_msg": debug_msg,
+        "script_src": "MealieApp/js/debugger.js",
+        "food_db": food_db,
     })

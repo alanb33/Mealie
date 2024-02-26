@@ -2,6 +2,10 @@
 {% block body %}
     <p>This is the debugger.</p>
     <div>
-        <p>{{ debug_msg }}</p>
+        {% for item in food_db %}
+            <li><a href="#" id="food-db-{{ item.id }}" onclick="hello({{ food_db }})">{{ item.name }}</a></li>
+        {% empty %}
+            <li>No items.</li>
+        {% endfor %}
     </div>
 {% endblock %}
