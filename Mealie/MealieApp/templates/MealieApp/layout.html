@@ -6,12 +6,17 @@
         {% if script_src %}
             <script src="{% static script_src %}"></script>
         {% endif %}
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
     </head>
-    <body>
-        <h1>{{ title }}</h1>
-        <hr>
-        {% block body %}
-        {% endblock %}
+    <body class="p-5">
+        <div>
+            <h1>{{ title }}</h1>
+            <hr>
+            {% block body %}
+            {% endblock %}
+        </div>
     </body>
     {% if request.path != "/mealie/" %}
         <footer>

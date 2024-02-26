@@ -6,6 +6,11 @@
         <li><a href="{% url 'Mealie:index' %}">View today's journal entry</a></li>
         <li><a href="{% url 'Mealie:index' %}">View another day's journal entry</a></li>
         <li><a href="{% url 'Mealie:view-food-db' %}">View the food database</a></li>
-        <li><a href="{% url 'Mealie:debugger' %}">Head to the debugger</a></li>
+    </ul>
+    <hr>
+    <h2>Experimental Section</h2>
+    <ul>
+        <li><a href="{% url 'Mealie:experimental/view-food-db' %}">View Food DB</a></li>
+        <li><a href="{% url 'Mealie:experimental/add-food-form' %}">Add Food Form</a></li>
     </ul>
 {% endblock %}
