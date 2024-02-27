@@ -20,10 +20,17 @@
             {% endblock %}
         </div>
     </body>
-    {% if request.path != "/mealie/" %}
+    {% if request.path != "/mealie/login/" and request.path != "/mealie/logout/" %}
         <footer>
             <hr>
-            <a href="{% url 'Mealie:index' %}">Return to the Mealie Index</a>
+            {% if request.path != "/mealie/" %}
+                <div>
+                    <a href="{% url 'Mealie:index' %}">Return to the Mealie Index</a>
+                </div>
+            {% endif %}
+            <div>
+                <a href="{% url 'Mealie:logout' %}">Log out ({{ request.user.username }})</a>
+            </div>
         </footer>
     {% endif %}
 </html>

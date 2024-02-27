@@ -1,6 +1,6 @@
 {% extends "MealieApp/layout.html" %}
 {% block body %}
-    <p>Hello, world!</p>
+    <p>Hello, {{ user_name }}!</p>
     <p>Choose what to do:</p>
     <ul>
         <li><a href="{% url 'Mealie:index' %}">View today's journal entry</a></li>
