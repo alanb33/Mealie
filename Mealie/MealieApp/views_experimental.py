@@ -1,5 +1,6 @@
 from django.core import serializers
 from django.shortcuts import render
+from django.http import HttpResponse
 from .models import FoodItem
 
 # A separate view file for the experimental route, to isolate imports.
@@ -19,7 +20,9 @@ def view_food_db(request):
 def add_food_form(request):
 
     if request.method == "POST":
-        pass
+        food_name = request.POST["food-name"]
+        food_ss = request.POST["food-serving-size"]
+        return HttpResponse(f"Nice, the food is {food_name} and the serving size is {food_ss}.")
     else:
         return render(request, "MealieApp/experimental/add_food_form.html",
         {

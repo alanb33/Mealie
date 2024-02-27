@@ -3,62 +3,66 @@
     <script type="text/javascript">
         //var food_db = JSON.parse('{{ food_db_json|safe }}')
     </script>
-    <div class="input-group flex-nowrap">
-        <div class="input-group">
-            <span class="input-group-text">Name of Food Item</span>
-            <input required type="text" class="form-control col-3" id="food-name" placeholder="Baked Potato"/>
+    <form action="{% url 'Mealie:experimental/add-food-form' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-2 bg-primary"><em>Name of Food Item</em></span>
+                <input required type="text" class="col-md-2 col-sm-4" id="food-name", name="food-name" placeholder="Baked Potato"/>
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-2 bg-info">Serving Size</span>
+                <input required type="text" class="col-md-2 col-sm-4" id="food-serving-size" name="food-serving-size" placeholder="1 potato"/>
+            </div>
+            <div class="input-group pt-4 col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-info"><strong>Calories</strong></span>
+                <input class="col-lg-3 col-sm-5" type="number" min="0" value="0" id="food-calories">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Total Fat (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-total-fat-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Sat. Fat (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-saturated-fat-dv">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Trans Fat (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-trans-fat-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Cholesterol (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-cholesterol-dv">
+            </div>
+            <div class="input-group col-6 row"> 
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Sodium (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-sodium-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Total Carbs (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-total-carbohydrates-dv">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Diet. Fiber (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-dietary-fiber-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Total Sugars</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-total-sugars">
+            </div>
+            <div class="input-group col-6 row"> 
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-danger">Add. Sugars (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-added-sugars-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Protein</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-protein">
+            </div>
+            <div class="input-group col-6 row"> 
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Vitamin D (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-vitamin-d-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Calcium (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-calcium-dv">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Iron (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-iron-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Potassium (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-potassium-dv">
+            </div>
+            <div class="input-group col-6 pt-3 row">
+                <button class="col-4" type="submit">Add New Food Item</button>
+            </div>
         </div>
-        <div class="input-group">
-            <span class="input-group-text">Serving Size</span>
-            <input required type="text" class="form-control col-3" id="food-serving-size" placeholder="1 potato"/>
-        </div>
-        <div class="input-group">
-            <span class="input-group-text"><strong>Calories</strong></span>
-            <input type="number" min="0" value="0" id="food-calories">
-        </div>
-    </div>
-    <div>
-        <div class="input-group col-5 w-100">
-            <span class="input-group-text">Total Fat (%DV)</span>
-            <input type="number" min="0" value="0" id="food-total-fat-dv">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">Saturated Fat (%DV)</span>
-            <input type="number" min="0" value="0" id="food-saturated-fat-dv">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">Trans Fat (%DV)</span>
-            <input type="number" min="0" value="0" id="food-trans-fat-dv">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">Cholesterol (%DV)</span>
-            <input type="number" min="0" value="0" id="food-cholesterol-dv">
-            <span class="input-group-text">Sodium (%DV)</span>
-            <input type="number" min="0" value="0" id="food-sodium-dv">
-            <span class="input-group-text">Total Carbohydrates (%DV)</span>
-            <input type="number" min="0" value="0" id="food-total-carbohydrates-dv">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">Dietary Fiber (%DV)</span>
-            <input type="number" min="0" value="0" id="food-dietary-fiber-dv">
-            <span class="input-group-text">Total Sugars</span>
-            <input type="number" min="0" value="0" id="food-total-sugars">
-            <span class="input-group-text">Added Sugars (%DV)</span>
-            <input type="number" min="0" value="0" id="food-added-sugars-dv">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">Protein</span>
-            <input type="number" min="0" value="0" id="food-protein">
-            <span class="input-group-text">Vitamin D (%DV)</span>
-            <input type="number" min="0" value="0" id="food-vitamin-d-dv">
-            <span class="input-group-text">Calcium (%DV)</span>
-            <input type="number" min="0" value="0" id="food-calcium-dv">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">Iron (%DV)</span>
-            <input type="number" min="0" value="0" id="food-iron-dv">
-            <span class="input-group-text">Potassium (%DV)</span>
-            <input type="number" min="0" value="0" id="food-potassium-dv">
-        </div>
-    </div>
+    </form>
 {% endblock %}
