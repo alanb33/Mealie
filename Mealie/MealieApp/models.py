@@ -11,7 +11,7 @@ class FoodItem(models.Model):
     sodium_dv = models.IntegerField()
     total_carbohydrates_dv = models.IntegerField()
     dietary_fiber_dv = models.IntegerField()
-    total_sugars = models.IntegerField()
+    total_sugars = models.FloatField()
     added_sugars_dv = models.IntegerField()
     protein = models.FloatField()
     vitamin_d_dv = models.IntegerField()
