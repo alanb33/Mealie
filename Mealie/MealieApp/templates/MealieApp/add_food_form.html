@@ -1,0 +1,76 @@
+{% extends "MealieApp/layout.html" %}
+{% block body %}
+    <script type="text/javascript">
+        var all_food_names = {{ all_food_names|safe }}
+    </script>
+    {% if success_msg %}
+        <div>
+            <h4 class="text-success">{{ success_msg }}</h4>
+        </div>
+    {% endif %}
+    <form action="{% url 'Mealie:add-food-form' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-2 bg-primary"><em>Name of Food Item</em></span>
+                <input required type="text" class="col-md-2 col-sm-4" id="food-name", name="food-name" placeholder="Baked Potato" autocomplete="off"/>
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-2 bg-info">Serving Size</span>
+                <input required type="text" class="col-md-2 col-sm-4" id="food-serving-size" name="food-serving-size" placeholder="1 potato" autocomplete="off"/>
+            </div>
+            <div class="input-group pt-4 col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-info"><strong>Calories</strong></span>
+                <input class="col-lg-3 col-sm-5" type="number" min="0" value="0" id="food-calories" name="food-calories">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Total Fat (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-total-fat-dv" name="food-total-fat-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Sat. Fat (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-saturated-fat-dv" name="food-saturated-fat-dv">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Trans Fat (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-trans-fat-dv" name="food-trans-fat-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Cholesterol (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-cholesterol-dv" name="food-cholesterol-dv">
+            </div>
+            <div class="input-group col-6 row"> 
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Sodium (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-sodium-dv" name="food-sodium-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Total Carbs (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-total-carbohydrates-dv" name="food-total-carbohydrates-dv">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Diet. Fiber (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-dietary-fiber-dv" name="food-dietary-fiber-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-warning">Total Sugars</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-total-sugars" name="food-total-sugars">
+            </div>
+            <div class="input-group col-6 row"> 
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-danger">Add. Sugars (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-added-sugars-dv" name="food-added-sugars-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Protein</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-protein" name="food-protein">
+            </div>
+            <div class="input-group col-6 row"> 
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Vitamin D (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-vitamin-d-dv" name="food-vitamin-d-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Calcium (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-calcium-dv" name="food-calcium-dv">
+            </div>
+            <div class="input-group col-6 row">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Iron (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-iron-dv" name="food-iron-dv">
+                <span class="input-group-text col-sm-3 col-md-3 col-lg-1 bg-success">Potassium (%DV)</span>
+                <input class="col-md-1 col-sm-3" type="number" min="0" value="0" id="food-potassium-dv" name="food-potassium-dv">
+            </div>
+            <div class="input-group col-6 pt-3 row" id="submit-div">
+                <button class="col-4" type="submit" id="food-submit">Add New Food Item</button>
+            </div>
+        </div>
+    </form>
+    <div class="pt-3">
+        <a href="{% url 'Mealie:view-food-db' %}">View the food database</a>
+    </div>
+{% endblock %}

@@ -22,7 +22,7 @@ def view_food_db(request):
         return redirected
 
 def add_food_form(request):
-    redirected = redirect(request, "superuser")
+    redirected = redirect(request, "add")
     if not redirected:
         all_food_names = serializers.serialize("json", FoodItem.objects.only("name"))
         if request.method == "POST":

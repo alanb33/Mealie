@@ -5,6 +5,8 @@ def redirect(request, level):
     match level:
         case "superuser":
             return superuser_redirect(request)
+        case "auth":
+            return authenticated_redirect(request)
         case _:
             return authenticated_redirect(request)
 

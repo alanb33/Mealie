@@ -1,5 +1,6 @@
 function check_for_food(food_name)
 {
+    console.log("compositionend triggered with " + food_name);
     let submit_button = document.querySelector("#food-submit");
     let submit_button_div = document.querySelector("#submit-div");
     for (let i = 0; i < all_food_names.length; i++)
