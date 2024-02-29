@@ -1,7 +1,7 @@
 {% extends "MealieApp/layout.html" %}
 {% block body %}
     <script type="text/javascript">
-        var all_food_names = JSON.parse('{{ all_food_names|safe }}')
+        var all_food_names = {{ all_food_names|safe }}
     </script>
     {% if success_msg %}
         <div>
@@ -70,4 +70,7 @@
             </div>
         </div>
     </form>
+    <div class="pt-3">
+        <a href="{% url 'Mealie:experimental/view-food-db' %}">View the food database</a>
+    </div>
 {% endblock %}

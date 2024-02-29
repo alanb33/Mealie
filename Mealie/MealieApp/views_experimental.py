@@ -10,8 +10,7 @@ from .auth_util import redirect
 def view_food_db(request):
     redirected = redirect(request, "superuser")
     if not redirected:
-        debug_msg = str(len(FoodItem.objects.all()))
-        food_db_json = serializers.serialize("json", FoodItem.objects.all())
+        food_db_json = serializers.serialize("json", FoodItem.objects.all().order_by("name"))
 
         return render(request, "MealieApp/experimental/view_food_db.html",
         {

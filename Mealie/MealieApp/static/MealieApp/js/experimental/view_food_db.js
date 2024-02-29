@@ -1,11 +1,7 @@
 function try_load_food_db()
 {
-    console.log("Hello, world");
     if (food_db_json)
     {
-        console.log("Food db loaded!");
-        console.log(food_db_json)
-
         let food_list = document.querySelector("#food-db-item-list");
         for (let i = 0; i < food_db_json.length; i++)
         {
@@ -51,7 +47,8 @@ function try_load_food_db()
                     }
                 }
                 food_item.innerHTML = food_db_json[i].fields.name;
-                food_list.appendChild(food_item);    
+                food_list.appendChild(food_item);
+  
             }
         }
     }
