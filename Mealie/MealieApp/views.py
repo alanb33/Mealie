@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect
@@ -64,6 +66,49 @@ def logout_view(request):
             "title": "Mealie!",
             "warn_msg": "You are not logged in."
         })
+
+def view_journal_today(request):
+    redirected = redirect(request, "auth")
+    if not redirected:
+        today = datetime.date.today()
+        entries = JournalEntry.objects.all()
+        for entry in entries:
+            print(f"Today is {today} and entry.date is {entry.date}. Do they match? {today==entry.date}")
+        if request.method == "POST":
+            food_name = request.POST["food-item"]
+            print("Requested post item is " + food_name)
+            food_item_return = FoodItem.objects.all().filter(name=food_name)
+            if food_item_return:
+                journal_entry = JournalEntry(
+                    date=today,
+                    food_item=food_item_return[0],
+                    quantity=request.POST["food-quantity"],
+                )
+                journal_entry.save()
+        return view_journal_of(request, today)
+    else:
+        return redirected
+
+def view_journal_of(request, date):
+    redirected = redirect(request, "auth")
+    if not redirected:
+        # Date is a date object.
+        # models.DateField is a match; journal column "date" is a DateField
+
+        entries = list(JournalEntry.objects.filter(date=date))
+        for entry in entries:
+            print(f"Found entry for date {date}: {str(entry)}")
+        food_names = FoodItem.objects.values("name").order_by("name")
+        return render(request, "MealieApp/view_journal_entry.html",
+        {
+            "title": f"Journal Entry for {str(date)}",
+            "date": date,
+            "entries": entries,
+            "food_names": food_names,
+        })
+    else:
+        return redirected
+
 
 def view_food_db(request):
     redirected = redirect(request, "superuser")

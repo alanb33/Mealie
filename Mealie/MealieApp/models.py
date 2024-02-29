@@ -29,9 +29,10 @@ class FoodItem(models.Model):
 class JournalEntry(models.Model):
     date = models.DateField(auto_now_add=True)
     food_item = models.ForeignKey("FoodItem", on_delete=models.PROTECT)
+    quantity = models.FloatField(default=0)
 
     def __str__(self):
-        return "Journal Entry " + str(self.date.today()) + ": " + self.food_item.name
+        return f"Journal Entry {str(self.date.today())}: {self.food_item.name} ({self.quantity} servings)"
 
     class Meta:
         verbose_name = "Journal Entry"
