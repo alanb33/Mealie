@@ -1,22 +1,36 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>{{ title }}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% if script_src %}
             <script src="{% static script_src %}"></script>
         {% endif %}
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
     </head>
-    <body>
-        <h1>{{ title }}</h1>
-        <hr>
-        {% block body %}
-        {% endblock %}
+    <body class="p-5">
+        <div>
+            <h1>{{ title }}</h1>
+            <hr>
+            {% block body %}
+            {% endblock %}
+        </div>
     </body>
-    {% if request.path != "/mealie/" %}
+    {% if request.path != "/mealie/login/" and request.path != "/mealie/logout/" %}
         <footer>
             <hr>
-            <a href="{% url 'Mealie:index' %}">Return to the Mealie Index</a>
+            {% if request.path != "/mealie/" %}
+                <div>
+                    <a href="{% url 'Mealie:index' %}">Return to the Mealie Index</a>
+                </div>
+            {% endif %}
+            <div>
+                <a href="{% url 'Mealie:logout' %}">Log out ({{ request.user.username }})</a>
+            </div>
         </footer>
     {% endif %}
 </html>

@@ -1,11 +1,12 @@
 {% extends "MealieApp/layout.html" %}
 {% block body %}
     <script type="text/javascript">
-        var food_db = JSON.parse('{{ food_db_json|safe }}')
+        var food_db_json = {{ food_db_json|safe }};
     </script>
-    <p>This is the debugger.</p>
     <div>
         <ul id="food-db-item-list">
         </ul>
     </div>
+    <hr>
+    <a href="{% url 'Mealie:experimental/add-food-form' %}">Add a new food item</a>
 {% endblock %}
