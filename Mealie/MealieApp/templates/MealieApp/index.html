@@ -1,16 +1,22 @@
 {% extends "MealieApp/layout.html" %}
 {% block body %}
-    <p>Hello, {{ user_name }}!</p>
-    <p>Choose what to do:</p>
-    <ul>
-        <li><a href="{% url 'Mealie:index' %}">View today's journal entry</a></li>
-        <li><a href="{% url 'Mealie:index' %}">View another day's journal entry</a></li>
-        <li><a href="{% url 'Mealie:view-food-db' %}">View the food database</a></li>
-    </ul>
-    <hr>
-    <h2>Experimental Section</h2>
-    <ul>
-        <li><a href="{% url 'Mealie:experimental/view-food-db' %}">View Food DB</a></li>
-        <li><a href="{% url 'Mealie:experimental/add-food-form' %}">Add Food Form</a></li>
-    </ul>
+    <div>
+        <p>Hello, {{ user_name }}!</p>
+        <p>Choose what to do:</p>
+        <ul>
+            <li><a href="{% url 'Mealie:index' %}">View today's journal entry</a></li>
+            <li><a href="{% url 'Mealie:index' %}">View another day's journal entry</a></li>
+            <li><a href="{% url 'Mealie:view-food-db' %}">View the food database</a></li>
+        </ul>
+    </div>
+    {% if request.user.is_superuser %}
+        <hr>
+        <div>
+            <h2>Experimental Section (Superuser-only)</h2>
+            <ul>
+                <li><a href="{% url 'Mealie:experimental/view-food-db' %}">View Food DB</a></li>
+                <li><a href="{% url 'Mealie:experimental/add-food-form' %}">Add Food Form</a></li>
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}

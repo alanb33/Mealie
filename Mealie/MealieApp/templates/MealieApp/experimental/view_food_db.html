@@ -1,7 +1,9 @@
 {% extends "MealieApp/layout.html" %}
 {% block body %}
-    <script type="text/javascript">
-        var food_db = JSON.parse('{{ food_db_json|safe }}')
+    <script>
+        var food_db_json = JSON.parse('{{ food_db_json|safe }}');
+        console.log("FOOD DB JSON: ")
+        try_load_food_db()
     </script>
     <div>
         <ul id="food-db-item-list">

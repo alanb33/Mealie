@@ -6,7 +6,7 @@ class FoodItem(models.Model):
     calories = models.IntegerField()
     total_fat_dv = models.IntegerField()
     saturated_fat_dv = models.IntegerField()
-    trans_fat = models.IntegerField()
+    trans_fat_dv = models.IntegerField()
     cholesterol_dv = models.IntegerField()
     sodium_dv = models.IntegerField()
     total_carbohydrates_dv = models.IntegerField()
