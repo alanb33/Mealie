@@ -11,7 +11,7 @@ class FoodItem(models.Model):
     sodium_dv = models.IntegerField()
     total_carbohydrates_dv = models.IntegerField()
     dietary_fiber_dv = models.IntegerField()
-    total_sugars = models.IntegerField()
+    total_sugars = models.FloatField()
     added_sugars_dv = models.IntegerField()
     protein = models.FloatField()
     vitamin_d_dv = models.IntegerField()
@@ -29,9 +29,10 @@ class FoodItem(models.Model):
 class JournalEntry(models.Model):
     date = models.DateField(auto_now_add=True)
     food_item = models.ForeignKey("FoodItem", on_delete=models.PROTECT)
+    quantity = models.FloatField(default=0)
 
     def __str__(self):
-        return "Journal Entry " + str(self.date.today()) + ": " + self.food_item.name
+        return f"Journal Entry {str(self.date.today())}: {self.food_item.name} ({self.quantity} servings)"
 
     class Meta:
         verbose_name = "Journal Entry"

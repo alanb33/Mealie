@@ -1,0 +1,94 @@
+{% extends 'MealieApp/layout.html' %}
+{% block body %}
+<div>
+    {% if entries_qs|length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" class="col-1">Food</th>
+                <th scope="col">Servings</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Total Fat (%DV)</th>
+                <th scope="col">Sat. Fat (%DV)</th>
+                <th scope="col">Trans Fat (%DV)</th>
+                <th scope="col">Cholesterol (%DV)</th>
+                <th scope="col">Sodium (%DV)</th>
+                <th scope="col">Total Carbs (%DV)</th>
+                <th scope="col">D. Fiber (%DV)</th>
+                <th scope="col">Total Sugars</th>
+                <th scope="col">Added Sugars (%DV)</th>
+                <th scope="col">Protein</th>
+                <th scope="col">Vitamin D (%DV)</th>
+                <th scope="col">Calcium (%DV)</th>
+                <th scope="col">Iron (%DV)</th>
+                <th scope="col">Potassium (%DV)</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries_qs %}
+                <tr>
+                    <td>{{ entry.food_item.name }}</td>
+                    <td>{{ entry.quantity }}
+                    <td><strong>{{ entry.food_item.calories }}</strong></td>
+                    <td>{{ entry.food_item.total_fat_dv }}</td>
+                    <td>{{ entry.food_item.saturated_fat_dv }}</td>
+                    <td>{{ entry.food_item.trans_fat_dv }}</td>
+                    <td>{{ entry.food_item.cholesterol_dv }}</td>
+                    <td>{{ entry.food_item.sodium_dv }}</td>
+                    <td>{{ entry.food_item.total_carbohydrates_dv }}</td>
+                    <td>{{ entry.food_item.dietary_fiber_dv }}</td>
+                    <td>{{ entry.food_item.total_sugars }}</td>
+                    <td>{{ entry.food_item.added_sugars_dv }}</td>
+                    <td>{{ entry.food_item.protein }}</td>
+                    <td>{{ entry.food_item.vitamin_d_dv }}</td>
+                    <td>{{ entry.food_item.calcium_dv }}</td>
+                    <td>{{ entry.food_item.iron_dv }}</td>
+                    <td>{{ entry.food_item.potassium_dv }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><strong>Totals</strong></td>
+                    <td></td>
+                    <td><strong><em>{{ totals.calories }}</em></strong></td>
+                    <td><strong>{{ totals.total_fat_dv }}%</strong></td>
+                    <td><strong>{{ totals.saturated_fat_dv }}%</strong></td>
+                    <td><strong>{{ totals.trans_fat_dv }}%</strong></td>
+                    <td><strong>{{ totals.cholesterol_dv }}%</strong></td>
+                    <td><strong>{{ totals.sodium_dv }}%</strong></td>
+                    <td><strong>{{ totals.total_carbohydrates_dv }}%</strong></td>
+                    <td><strong>{{ totals.dietary_fiber_dv }}%</strong></td>
+                    <td><strong>{{ totals.total_sugars }}</strong></td>
+                    <td><strong>{{ totals.added_sugars_dv }}%</strong></td>
+                    <td><strong>{{ totals.protein }}</strong></td>
+                    <td><strong>{{ totals.vitamin_d_dv }}%</strong></td>
+                    <td><strong>{{ totals.calcium_dv }}%</strong></td>
+                    <td><strong>{{ totals.iron_dv }}%</strong></td>
+                    <td><strong>{{ totals.potassium_dv }}%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No entries.</p>
+    {% endif %}
+    <hr>
+    <h5>Add a new journal entry for today:</h4>
+    <form action="{% url 'Mealie:view-journal-today' %}" method="POST">
+        {% csrf_token %}
+        <label for="food-item">Choose a food item to add:</label>
+        <div>
+            <select name="food-item" id="food-item">
+                {% for food in food_names %}
+                    <option value="{{ food.name }}">{{ food.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="input-group col-6 pt-2">
+            <span class="input-group-text col-sm-3 col-md-3 col-lg-1">Quantity</span>
+            <input required class="col-md-1 col-sm-3" type="number" min="0.25" value="0" id="food-quantity" name="food-quantity" step="0.25"/>
+        </div>
+        <div class="pt-3 col-3 row">
+            <button type="submit" id="food-item-submit">Add Item</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
