@@ -1,6 +1,6 @@
 {% extends 'MealieApp/layout.html' %}
 {% block body %}
     {% for item in test_qs %}
-        <p>{{ item.calories.verbose_name }}</p>
+        <p>{{ item.name }}</p>
     {% endfor %}
 {% endblock %}

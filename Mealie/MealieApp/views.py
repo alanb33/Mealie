@@ -69,7 +69,7 @@ def logout_view(request):
         })
 
 def view_journal_today(request):
-    redirected = redirect(request, "auth")
+    redirected = redirect(request, "superuser")
     if not redirected:
         today = datetime.date.today()
         entries = JournalEntry.objects.all()
@@ -88,12 +88,13 @@ def view_journal_today(request):
         return redirected
 
 def view_journal_of(request, date):
-    redirected = redirect(request, "auth")
+    redirected = redirect(request, "superuser")
     if not redirected:
-        # Date is a date object.
-        # models.DateField is a match; journal column "date" is a DateField
-
         entries_qs = JournalEntry.objects.filter(date=date)
+        header_actual_index = 2
+        nutritional_index = 4
+        table_headers = FoodItem._meta.get_fields()[header_actual_index:]
+        nutritional_columns = FoodItem._meta.get_fields()[nutritional_index:]
         food_names = FoodItem.objects.values("name").order_by("name")
         totals = calculate_totals(entries_qs)
         return render(request, "MealieApp/view_journal_entry.html",
@@ -102,7 +103,10 @@ def view_journal_of(request, date):
             "date": date,
             "entries_qs": entries_qs,
             "food_names": food_names,
+            "table_headers": table_headers,
+            "nutritional_columns": nutritional_columns,
             "totals": totals,
+            "script_src": "MealieApp/js/view_food_journal.js",
         })
     else:
         return redirected
