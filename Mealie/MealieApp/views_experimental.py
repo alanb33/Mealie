@@ -1,11 +1,67 @@
+import datetime
+
 from django.core import serializers
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import FoodItem
+from .models import FoodItem, JournalEntry
 from .auth_util import redirect
+from .query_util import calculate_totals
+
+from django.db import models
 
 # A separate view file for the experimental route, to isolate imports.
+
+def playground(request):
+    redirected = redirect(request, "superuser")
+    if not redirected:
+        test_qs = FoodItem._meta.get_fields()[2:]
+        return render(request, "MealieApp/experimental/playground.html",
+        {
+            "title": "Code Playground",
+            "test_qs": test_qs,
+        })
+    else:
+        return redirected
+
+def exp_view_journal_entry(request):
+    redirected = redirect(request, "superuser")
+    if not redirected:
+        today = datetime.date.today()
+        entries = JournalEntry.objects.all()
+        if request.method == "POST":
+            food_name = request.POST["food-item"]
+            food_item_return = FoodItem.objects.all().filter(name=food_name)
+            if food_item_return:
+                journal_entry = JournalEntry(
+                    date=today,
+                    food_item=food_item_return[0],
+                    quantity=request.POST["food-quantity"],
+                )
+                journal_entry.save()
+        return view_journal_of(request, today)
+    else:
+        return redirected
+
+def view_journal_of(request, date):
+    redirected = redirect(request, "superuser")
+    if not redirected:
+        # Date is a date object.
+        # models.DateField is a match; journal column "date" is a DateField
+
+        entries_qs = JournalEntry.objects.filter(date=date)
+        food_names = FoodItem.objects.values("name").order_by("name")
+        totals = calculate_totals(entries_qs)
+        return render(request, "MealieApp/experimental/exp_view_journal_entry.html",
+        {
+            "title": f"Journal Entry for {str(date)}",
+            "date": date,
+            "entries_qs": entries_qs,
+            "food_names": food_names,
+            "totals": totals,
+        })
+    else:
+        return redirected
 
 def view_food_db(request):
     redirected = redirect(request, "superuser")
