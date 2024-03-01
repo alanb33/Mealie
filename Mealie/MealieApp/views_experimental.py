@@ -52,7 +52,9 @@ def view_journal_of(request, date):
 
         entries_qs = JournalEntry.objects.filter(date=date)
         header_actual_index = 2
+        nutritional_index = 4
         table_headers = FoodItem._meta.get_fields()[header_actual_index:]
+        nutritional_columns = FoodItem._meta.get_fields()[nutritional_index:]
         food_names = FoodItem.objects.values("name").order_by("name")
         totals = calculate_totals(entries_qs)
         return render(request, "MealieApp/experimental/exp_view_journal_entry.html",
@@ -62,7 +64,9 @@ def view_journal_of(request, date):
             "entries_qs": entries_qs,
             "food_names": food_names,
             "table_headers": table_headers,
+            "nutritional_columns": nutritional_columns,
             "totals": totals,
+            "script_src": "MealieApp/js/experimental/exp_view_food_journal.js",
         })
     else:
         return redirected

@@ -1,4 +1,5 @@
 {% extends 'MealieApp/layout.html' %}
+{% load mealie_tags %}
 {% block body %}
 <div>
     {% if entries_qs|length > 0 %}
@@ -15,41 +16,17 @@
                 <tr>
                     <td>{{ entry.food_item.name }}</td>
                     <td>{{ entry.quantity }}
-                    <td><strong>{{ entry.food_item.calories }}</strong></td>
-                    <td>{{ entry.food_item.total_fat_dv }}</td>
-                    <td>{{ entry.food_item.saturated_fat_dv }}</td>
-                    <td>{{ entry.food_item.trans_fat_dv }}</td>
-                    <td>{{ entry.food_item.cholesterol_dv }}</td>
-                    <td>{{ entry.food_item.sodium_dv }}</td>
-                    <td>{{ entry.food_item.total_carbohydrates_dv }}</td>
-                    <td>{{ entry.food_item.dietary_fiber_dv }}</td>
-                    <td>{{ entry.food_item.total_sugars }}</td>
-                    <td>{{ entry.food_item.added_sugars_dv }}</td>
-                    <td>{{ entry.food_item.protein }}</td>
-                    <td>{{ entry.food_item.vitamin_d_dv }}</td>
-                    <td>{{ entry.food_item.calcium_dv }}</td>
-                    <td>{{ entry.food_item.iron_dv }}</td>
-                    <td>{{ entry.food_item.potassium_dv }}</td>
+                    {% for field in nutritional_columns %}
+                        <td id="food-item-{{entry.id}}-{{field.name}}">{{ entry.food_item|get_obj_attr:field.name|multiply:entry.quantity }}</td>
+                    {% endfor %}
                 </tr>
                 {% endfor %}
                 <tr>
                     <td><strong>Totals</strong></td>
                     <td></td>
-                    <td><strong><em>{{ totals.calories }}</em></strong></td>
-                    <td><strong>{{ totals.total_fat_dv }}%</strong></td>
-                    <td><strong>{{ totals.saturated_fat_dv }}%</strong></td>
-                    <td><strong>{{ totals.trans_fat_dv }}%</strong></td>
-                    <td><strong>{{ totals.cholesterol_dv }}%</strong></td>
-                    <td><strong>{{ totals.sodium_dv }}%</strong></td>
-                    <td><strong>{{ totals.total_carbohydrates_dv }}%</strong></td>
-                    <td><strong>{{ totals.dietary_fiber_dv }}%</strong></td>
-                    <td><strong>{{ totals.total_sugars }}</strong></td>
-                    <td><strong>{{ totals.added_sugars_dv }}%</strong></td>
-                    <td><strong>{{ totals.protein }}</strong></td>
-                    <td><strong>{{ totals.vitamin_d_dv }}%</strong></td>
-                    <td><strong>{{ totals.calcium_dv }}%</strong></td>
-                    <td><strong>{{ totals.iron_dv }}%</strong></td>
-                    <td><strong>{{ totals.potassium_dv }}%</strong></td>
+                    {% for field in nutritional_columns %}
+                        <td id="food-item-total-{{field.name}}">{{ totals|get_dict_key:field.name }}</td>
+                    {% endfor %}
                 </tr>
             </tbody>
         </table>
@@ -58,7 +35,7 @@
     {% endif %}
     <hr>
     <h5>Add a new journal entry for today:</h4>
-    <form action="{% url 'Mealie:view-journal-today' %}" method="POST">
+    <form action="{% url 'Mealie:experimental/exp-view-journal-entry' %}" method="POST">
         {% csrf_token %}
         <label for="food-item">Choose a food item to add:</label>
         <div>
