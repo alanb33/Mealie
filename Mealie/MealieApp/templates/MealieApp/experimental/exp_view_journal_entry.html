@@ -5,23 +5,9 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col" class="col-1">Food</th>
-                <th scope="col">Servings</th>
-                <th scope="col">Calories</th>
-                <th scope="col">Total Fat (%DV)</th>
-                <th scope="col">Sat. Fat (%DV)</th>
-                <th scope="col">Trans Fat (%DV)</th>
-                <th scope="col">Cholesterol (%DV)</th>
-                <th scope="col">Sodium (%DV)</th>
-                <th scope="col">Total Carbs (%DV)</th>
-                <th scope="col">D. Fiber (%DV)</th>
-                <th scope="col">Total Sugars</th>
-                <th scope="col">Added Sugars (%DV)</th>
-                <th scope="col">Protein</th>
-                <th scope="col">Vitamin D (%DV)</th>
-                <th scope="col">Calcium (%DV)</th>
-                <th scope="col">Iron (%DV)</th>
-                <th scope="col">Potassium (%DV)</th>
+                {% for table_header in table_headers %}
+                    <th scope="col">{{ table_header.verbose_name }}</th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>

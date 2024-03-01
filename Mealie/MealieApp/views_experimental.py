@@ -16,6 +16,7 @@ def playground(request):
     redirected = redirect(request, "superuser")
     if not redirected:
         test_qs = FoodItem._meta.get_fields()[2:]
+        print(totals)
         return render(request, "MealieApp/experimental/playground.html",
         {
             "title": "Code Playground",
@@ -50,6 +51,8 @@ def view_journal_of(request, date):
         # models.DateField is a match; journal column "date" is a DateField
 
         entries_qs = JournalEntry.objects.filter(date=date)
+        header_actual_index = 2
+        table_headers = FoodItem._meta.get_fields()[header_actual_index:]
         food_names = FoodItem.objects.values("name").order_by("name")
         totals = calculate_totals(entries_qs)
         return render(request, "MealieApp/experimental/exp_view_journal_entry.html",
@@ -58,6 +61,7 @@ def view_journal_of(request, date):
             "date": date,
             "entries_qs": entries_qs,
             "food_names": food_names,
+            "table_headers": table_headers,
             "totals": totals,
         })
     else:
