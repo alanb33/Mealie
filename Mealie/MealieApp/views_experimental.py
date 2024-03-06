@@ -16,3 +16,13 @@ def playground(request):
         })
     else:
         return redirected
+
+def view_food_db(request):
+    redirected = redirect(request, "auth")
+    if not redirected:
+        return render(request, "MealieApp/experimental/view_food_db.html",
+        {
+            "title": "View Food DB",
+        })
+    else:
+        return redirected

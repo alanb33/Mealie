@@ -1,0 +1,22 @@
+{% extends "MealieApp/layout.html" %}
+{% block body %}
+    <script type="text/javascript">
+        // var food_db_json = {{ food_db_json|safe }};
+    </script>
+    <div class="accordion" id="food-db-accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-collapse="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Food Item Name
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#food-db-accordion">
+                <div class="accordion-body">
+                    <strong>Food Column Header:</strong> Food Column Data
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <a href="{% url 'Mealie:add-food-form' %}">Add a new food item</a>
+{% endblock %}
