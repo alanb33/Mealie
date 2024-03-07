@@ -6,13 +6,40 @@
     <div class="accordion" id="food-db-accordion">
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-collapse="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                    Food Item Name
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Food Item Name 1
                 </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#food-db-accordion">
                 <div class="accordion-body">
-                    <strong>Food Column Header:</strong> Food Column Data
+                    <div class="row">
+                        <div class="col-2 text-end">
+                            <p class="mb-0">
+                                <span class="fw-bold">Header 1:</span>
+                            </p>
+                            <p class="mb-0">
+                                <span class="fw-bold">Total Carbohydrates (%DV):</span>
+                            </p>
+                            <p class="mb-0">
+                                <span class="fw-bold">Dietary Fiber (%DV):</span>
+                            </p>
+                        </div>
+                        <div class="col-1 text-start">
+                            <p class="mb-0">
+                                <span>Header Data</span>
+                            </p>
+                            <p class="mb-0">
+                                <span>100%</span>
+                            </p>
+                            <p class="mb-0">
+                                <span>45%</span>
+                            </p>
+                        </div>
+                        <div class="col-2">
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
