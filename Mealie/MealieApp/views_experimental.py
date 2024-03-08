@@ -1,5 +1,6 @@
 from django.core import serializers
 from django.shortcuts import render
+from django.urls import reverse
 from .models import FoodItem
 from .auth_util import redirect
 
@@ -40,6 +41,8 @@ def view_food_db(request):
             "food_db_json": food_names,
             "table_headers_verbose": table_headers_verbose_list,
             "table_headers_nonverbose": table_headers_list,
+            "edit_button_url": reverse("Mealie:index"),
+            "delete_button_url": reverse("Mealie:index"),
         })
     else:
         return redirected

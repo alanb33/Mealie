@@ -1,13 +1,13 @@
-function build_accordion(food_names_list, table_headers_verbose, table_headers_nonverbose)
+function buildAccordion(djangoVars)
 {
 
     // Build the topmost accordion div
-    let accordion_head = document.querySelector("#food-db-accordion");
+    let accordionHead = getAccordionHead();
 
-    if (accordion_head != null)
+    if (accordionHead != null)
     {
-        accordion_head.textContent = "";
-        build_accordion_items(accordion_head, food_names_list, table_headers_verbose, table_headers_nonverbose);
+        accordionHead.textContent = "";
+        buildAccordionItems(djangoVars);
     }
     else
     {
@@ -15,86 +15,126 @@ function build_accordion(food_names_list, table_headers_verbose, table_headers_n
     }   
 }
 
-function build_accordion_items(accordion_head, food_names_list, table_headers_verbose, table_headers_nonverbose)
+function getAccordionHead()
+{
+    return document.querySelector("#food-db-accordion");
+}
+
+function buildAccordionItems(djangoVars)
 {
     // Let's get the list of all the food items.
-    console.log("Building heads");
 
-    let accordion_container = document.querySelector("#accordion-container");
-    console.log(accordion_container == null);
+    let accordionHead = getAccordionHead()
+    let accordionContainer = document.querySelector("#accordion-container");
 
-    for (let i = 0; i < food_names_list.length; i++)
+    for (let i = 0; i < djangoVars.foodNamesList.length; i++)
     {
-        let accordion_item = document.createElement("div");
-        accordion_item.id = "accordion-item-" + i;
-        accordion_item.classList.add("accordion-item");
-        accordion_head.appendChild(accordion_item);
 
-        let accordion_header = document.createElement("h2");
-        let ah_button = document.createElement("button");
-        ah_button.classList.add("accordion-button");
-        ah_button.type="button";
-        ah_button.dataset.bsToggle = "collapse";
-        ah_button.dataset.bsTarget = "#collapse-food-item-body-" + i;
-        ah_button.innerHTML = food_names_list[i].fields.name;
+        let accordionItem = document.createElement("div");
+        accordionItem.id = "accordion-item-" + i;
+        accordionItem.classList.add("accordion-item");
+        accordionHead.appendChild(accordionItem);
+
+        let accordionHeader = document.createElement("h2");
+        let ahButton = document.createElement("button");
+        ahButton.classList.add("accordion-button", "collapsed");
+        ahButton.type="button";
+        ahButton.dataset.bsToggle = "collapse";
+        ahButton.dataset.bsTarget = "#collapse-food-item-body-" + i;
+        ahButton.innerHTML = djangoVars.foodNamesList[i].fields.name;
         
-        accordion_header.appendChild(ah_button);
-        accordion_item.appendChild(accordion_header);
+        accordionHeader.appendChild(ahButton);
+        accordionItem.appendChild(accordionHeader);
 
-        let item_body_div = document.createElement("div");
-        item_body_div.id = "collapse-food-item-body-" + i;
-        item_body_div.classList.add("accordion-collapse", "collapse");
-        item_body_div.dataset.bsParent = "#food-db-accordion";
+        let itemBodyDiv = document.createElement("div");
+        itemBodyDiv.id = "collapse-food-item-body-" + i;
+        itemBodyDiv.classList.add("accordion-collapse", "collapse");
+        itemBodyDiv.dataset.bsParent = "#food-db-accordion";
 
-        accordion_item.append(item_body_div);
-        let item_body = document.createElement("div");
-        item_body.classList.add("accordion-body");
-        item_body_div.appendChild(item_body);
+        accordionItem.append(itemBodyDiv);
+        let itemBody = document.createElement("div");
+        itemBody.classList.add("accordion-body");
+        itemBodyDiv.appendChild(itemBody);
 
-        let body_row = document.createElement("div");
-        body_row.classList.add("row");
-        item_body.appendChild(body_row);
+        let bodyRow = document.createElement("div");
+        bodyRow.classList.add("row");
+        itemBody.appendChild(bodyRow);
 
         // Column name column
 
-        let header_column = document.createElement("div");
-        header_column.classList.add("col-2", "text-end");
-        body_row.append(header_column);
+        let headerColumn = document.createElement("div");
+        headerColumn.classList.add("col-2", "text-end");
+        bodyRow.append(headerColumn);
 
-        for(let y = 0; y < table_headers_verbose.length; y++)
+        for(let y = 0; y < djangoVars.tableHeaders.verbose.length; y++)
         {
-            let table_header_p = document.createElement("p");
-            table_header_p.classList.add("mb-0");
-            header_column.append(table_header_p);
+            let tableHeaderP = document.createElement("p");
+            tableHeaderP.classList.add("mb-0");
+            headerColumn.append(tableHeaderP);
 
-            let table_header_span = document.createElement("span");
-            table_header_span.classList.add("fw-bold");
-            table_header_span.innerHTML = table_headers_verbose[y];
-            table_header_p.append(table_header_span);
+            let tableHeaderSpan = document.createElement("span");
+            tableHeaderSpan.classList.add("fw-bold");
+            tableHeaderSpan.innerHTML = djangoVars.tableHeaders.verbose[y];
+            tableHeaderP.append(tableHeaderSpan);
         }
 
         // Column data column
 
-        let data_column = document.createElement("div");
-        data_column.classList.add("col-1", "text-start");
-        body_row.append(data_column);
+        let dataColumn = document.createElement("div");
+        dataColumn.classList.add("col-1", "text-start");
+        bodyRow.append(dataColumn);
 
-        for(let y = 0; y < table_headers_verbose.length; y++)
+        for(let y = 0; y < djangoVars.tableHeaders.verbose.length; y++)
         {
-            let table_header_p = document.createElement("p");
-            table_header_p.classList.add("mb-0");
-            data_column.append(table_header_p);
+            let tableHeaderP = document.createElement("p");
+            tableHeaderP.classList.add("mb-0");
+            dataColumn.append(tableHeaderP);
 
-            let table_header_span = document.createElement("span");
-            table_header_span.innerHTML = food_names_list[i].fields[table_headers_nonverbose[y]];
-            if (table_headers_nonverbose[y].includes("dv"))
+            let tableHeaderSpan = document.createElement("span");
+            tableHeaderSpan.innerHTML = djangoVars.foodNamesList[i].fields[djangoVars.tableHeaders.nonverbose[y]];
+            if (djangoVars.tableHeaders.nonverbose[y].includes("dv"))
             {
-                table_header_span.innerHTML += "%";
+                tableHeaderSpan.innerHTML += "%";
             }
-            table_header_p.append(table_header_span);
+            tableHeaderP.append(tableHeaderSpan);
+
         }
 
-        // TODO: The display is upside-down... bodies are collapsing ABOVE the parent rather than below.
-        // The current replication has paused on line 31 of the mock-up.
+        // Column for edit and delete buttons
+
+        let buttonColumn = document.createElement("div");
+        buttonColumn.classList.add("col-2");
+        buttonColumn.id = "food-item-button-column-" + i;
+        bodyRow.appendChild(buttonColumn);
+
+        let editButton = document.createElement("button");
+        editButton.id = "food-item-edit-button-" + i;
+        editButton.dataset.parent_id = i;
+        editButton.innerHTML = "Edit";
+        editButton.classList.add("me-2");
+        buttonColumn.appendChild(editButton);
+
+        let deleteButton = document.createElement("button");
+        deleteButton.id = "food-item-delete-button-" + i;
+        deleteButton.dataset.parent_id = i;
+        deleteButton.innerHTML = "Delete";
+        deleteButton.classList.add("btn-danger");
+        deleteButton.onclick = () => confirmDeleteButtonTransformation(deleteButton);
+        buttonColumn.appendChild(deleteButton);
+
     }
+
+}
+
+function confirmDeleteButtonTransformation(button)
+{
+    button.innerHTML = "Are you sure?";
+    button.onclick = () => doDeletion(button.dataset.parent_id);
+    //button.formaction = ""
+}
+
+function doDeletion(foodItemID)
+{
+    console.log("Deleting food with ID of " + foodItemID);
+    console.log("Opening URL " + djangoVars.buttonsUrls.delete);
 }

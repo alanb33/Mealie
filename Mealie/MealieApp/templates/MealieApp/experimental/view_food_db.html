@@ -3,10 +3,18 @@
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function()
         {
-            var food_names_list = {{ food_db_json|safe }};
-            var table_headers_verbose = {{ table_headers_verbose|safe }}
-            var table_headers_nonverbose = {{ table_headers_nonverbose|safe }}
-            build_accordion(food_names_list, table_headers_verbose, table_headers_nonverbose);
+            var djangoVars = {
+                foodNamesList: {{ food_db_json|safe }},
+                tableHeaders: {
+                    verbose: {{ table_headers_verbose|safe }},
+                    nonverbose: {{ table_headers_nonverbose| safe }},
+                },
+                buttonUrls: {
+                    edit: {{ edit_button_url }},
+                    delete: {{ delete_button_url }},
+                },
+            };
+            buildAccordion(djangoVars);
         });
     </script>
     <div class="accordion" id="food-db-accordion">
