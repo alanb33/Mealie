@@ -109,32 +109,33 @@ function buildAccordionItems(djangoVars)
 
         let editButton = document.createElement("button");
         editButton.id = "food-item-edit-button-" + i;
-        editButton.dataset.parent_id = i;
+        editButton.dataset.parentId = i;
         editButton.innerHTML = "Edit";
         editButton.classList.add("me-2");
         buttonColumn.appendChild(editButton);
 
         let deleteButton = document.createElement("button");
         deleteButton.id = "food-item-delete-button-" + i;
-        deleteButton.dataset.parent_id = i;
+        deleteButton.dataset.parentId = i;
         deleteButton.innerHTML = "Delete";
         deleteButton.classList.add("btn-danger");
-        deleteButton.onclick = () => confirmDeleteButtonTransformation(deleteButton);
+        deleteButton.onclick = () => confirmDeleteButtonTransformation(deleteButton, djangoVars.buttonUrls.delete);
         buttonColumn.appendChild(deleteButton);
 
     }
 
 }
 
-function confirmDeleteButtonTransformation(button)
+function confirmDeleteButtonTransformation(button, buttonUrl)
 {
     button.innerHTML = "Are you sure?";
-    button.onclick = () => doDeletion(button.dataset.parent_id);
-    //button.formaction = ""
+    //button.onclick = () => doDeletion(button.dataset.parentId, buttonUrl);
+    button.type = "submit";
+    button.onclick = () => location.href = buttonUrl;
 }
 
-function doDeletion(foodItemID)
+function doDeletion(foodItemID, buttonUrl)
 {
     console.log("Deleting food with ID of " + foodItemID);
-    console.log("Opening URL " + djangoVars.buttonsUrls.delete);
+    console.log("Opening URL " + buttonUrl);
 }
