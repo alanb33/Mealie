@@ -1,4 +1,5 @@
 from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import FoodItem
@@ -18,6 +19,29 @@ def playground(request):
         })
     else:
         return redirected
+
+def del_food(request):
+    # NOTE: This code would work in theory, but the design of the journal entry view gets in the way.
+    # The journal must be redesigned to do read-only 'pictures' of the values rather than pulling directly from the database.
+    redirected = redirect(request, "superuser")
+    if not redirected:
+        id_to_del = request.GET.get("id")
+        if id_to_del:
+            try:
+                id_to_del = int(id_to_del)
+                try:
+                    food_item = FoodItem.objects.filter(id=id_to_del).first()
+                    food_item.delete()
+                    return HttpResponse(f"ID to del: {id_to_del} corresponds with food_item {food_item.name}")
+                except IndexError:
+                    return HttpResponse("Given ID is invalid.")
+            except ValueError:
+                return HttpResponse("Given ID is invalid.")
+        else:
+            return HttpResponse("No ID provided.")
+    else:
+        return redirected
+
 
 def view_food_db(request):
     redirected = redirect(request, "auth")
